@@ -4,6 +4,7 @@ import Webcam from 'react-webcam';
 import CameraComponent from './CameraComponent';
 import ChatBox from './ChatBox';
 import Button from './components/Button.jsx'
+import VoiceToText from './components/VoiceToText';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <ChatBox />
         <CameraComponent />
         <Button />
+        <VoiceToText />
       </header>
     </div>
   );
