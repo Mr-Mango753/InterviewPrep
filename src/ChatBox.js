@@ -22,6 +22,7 @@ const ChatBox = () => {
   
       // Extract the AI response from the API response
       const responseText = response.data.choices[0].text;
+      console.log(responseText);
   
       // Update the chat interface
       setMessages([...messages, { text: newMessage, user: true }, { text: responseText, user: false }]);
