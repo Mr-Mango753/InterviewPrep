@@ -5,6 +5,7 @@ import CameraComponent from './CameraComponent';
 import ChatBox from './ChatBox';
 import Button from './components/Button.jsx'
 import VoiceToText from './components/VoiceToText';
+import React from 'react';
 
 function App() {
   return (
