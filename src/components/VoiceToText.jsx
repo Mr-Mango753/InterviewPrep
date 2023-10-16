@@ -24,7 +24,7 @@ const VoiceToText = () => {
 
     return (
         <div>
-            <button onClick={handleStart}>
+            <button className="voice-to-text-button" onClick={handleStart}>
                 {isListening ? 'Listening...' : 'Start Listening'}
             </button>
             <textarea value={transcript} readOnly placeholder="Transcription will appear here..."></textarea>

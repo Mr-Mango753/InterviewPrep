@@ -41,10 +41,10 @@ const CameraComponent = () => {
         ref={webcamRef}
         mirrored={true} 
       />
-      <button onClick={toggleCamera}>
+      <button className="cam-mic-button" onClick={toggleCamera}>
         {isCameraOn ? "Turn Camera Off" : "Turn Camera On"}
       </button>
-      <button onClick={toggleMic}>
+      <button className="cam-mic-button" onClick={toggleMic}>
         {isMicOn ? "Turn Mic Off" : "Turn Mic On"}
       </button>
     </div>
