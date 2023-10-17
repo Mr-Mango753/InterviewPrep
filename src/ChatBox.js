@@ -48,7 +48,7 @@ const ChatBox = () => {
         value={newMessage}
         onChange={(e) => setNewMessage(e.target.value)}
       />
-      <button onClick={handleSendMessage}>Send</button>
+      <button className="chat-button" onClick={handleSendMessage}>Send</button>
     </div>
   );
 };

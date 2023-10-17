@@ -5,6 +5,8 @@ import CameraComponent from './CameraComponent';
 import ChatBox from './ChatBox';
 import Button from './components/Button.jsx'
 import VoiceToText from './components/VoiceToText';
+import React from 'react';
+import axios from 'axios';
 
 require('dotenv').config();
 
