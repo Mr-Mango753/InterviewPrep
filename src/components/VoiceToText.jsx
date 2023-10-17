@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const VoiceToText = () => {
     const [transcript, setTranscript] = useState('');
     const [isListening, setIsListening] = useState(false);
-    const [videoUrl, setVideoUrl] = useState(null);
+    const [audioFile, setAudioFile] = useState(null);
 
     const handleStart = () => {
         if (window.SpeechRecognition || window.webkitSpeechRecognition) {
@@ -23,89 +23,31 @@ const VoiceToText = () => {
         }
     };
 
-    const handleApiCall = async () => {
-        const apiUrl = 'https://api.d-id.com/talks';
-        const API_KEY = "YXdlc29tZWFiY2pAZ21haWwuY29t:Oe_ubfueU4Ts7aON-rFwn";  // Please secure this!
-        const payload = {
-            script: {
-                type: "text",
-                subtitles: "false",
-                provider: {
-                    type: "microsoft",
-                    voice_id: "en-US-JennyNeural"
-                },
-                ssml: "false"
-            },
-            config: {
-                fluent: "false",
-                pad_audio: "0.0"
-            },
-            source_url: "https://www.d-id.com/wp-content/uploads/2023/07/NRtOl5zl-1.png"
-        };
+    const handleGenerateAudio = async () => {
+        sendTranscriptToBackend(transcript);
+    };
 
-        payload.script.input = transcript;
+    const sendTranscriptToBackend = async (text) => {
+        const backendUrl = 'http://127.0.0.1:5000/generate_audio';
 
         try {
-            const postResponse = await fetch(apiUrl, {
+            const response = await fetch(backendUrl, {
                 method: 'POST',
                 headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': `Basic ${API_KEY}`
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(payload)
+                body: JSON.stringify({ text: text })
             });
-            
-            if (postResponse.ok) {  // Check if POST was successful
-                
-                const postData = await postResponse.json();
-                console.log("TESTTTTT", postData, postData.id);
-                let id = postData.id;
-                let GET_apiURL = `https://api.d-id.com/talks/${id}`;
-                console.log(GET_apiURL);
-                setTimeout(async () => {
-                    // Now proceed with the GET request
-                    const getResponse = await fetch(GET_apiURL, {
-                        method: 'GET',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Authorization': `Basic ${API_KEY}`
-                        },
-                    });
-            
-                    if (getResponse.ok) {  // Check if GET was successful
-                        const getData = await getResponse.json();
-                        setVideoUrl(getData.result_url);
-                        if (getData.status != "done") {
-                            console.log(getData.audio_url, getData.source_url, videoUrl);
-                        }
-                    } else {
-                        console.error('GET request failed:', await getResponse.text());
-                    }
-                }, 5000);  // 5000 milliseconds = 5 seconds delay
-            
-                // Now proceed with the GET request
-            //     const getResponse = await fetch(GET_apiURL, {
-            //         method: 'GET',
-            //         headers: {
-            //             'Accept': 'application/json',
-            //             'Authorization': `Basic ${API_KEY}`
-            //         },
-            //     });
 
-            //     if (getResponse.ok) {  // Check if GET was successful
-            //         const getData = await getResponse.json();
-            //         setVideoUrl(getData.result_url);
-            //         if (getData.status != "done")
-            //         console.log(getData.audio_url, getData.source_url, videoUrl);
-            //     } else {
-            //         console.error('GET request failed:', await getResponse.text());
-            //     }
-            } else {
-                console.error('POST request failed:', await postResponse.text());
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status} ${response.statusText}`);
             }
+
+            const responseData = await response.json();
+            setAudioFile(responseData.audio_file);
+
         } catch (error) {
-            console.error('Error during API call', error);
+            console.error('Error sending transcript to backend:', error);
         }
     };
 
@@ -115,17 +57,19 @@ const VoiceToText = () => {
                 {isListening ? 'Listening...' : 'Start Listening'}
             </button>
             <textarea value={transcript} readOnly placeholder="Transcription will appear here..."></textarea>
-            <button onClick={handleApiCall} disabled={!transcript}>
-                Get Video
-            </button>
             
-            {videoUrl && (
+            {transcript && (
+                <button onClick={handleGenerateAudio}>
+                    Generate Audio
+                </button>
+            )}
+
+            {audioFile && (
                 <div>
-                    <h3>Your Video:</h3>
-                    <video width="320" height="240" controls>
-                        <source src={videoUrl} type="video/mp4" />
-                        Your browser does not support the video tag.
-                    </video>
+                    <h3>Your Generated Audio File:</h3>
+                        <audio controls src={`http://127.0.0.1:5000/simple_test`}>
+                            Your browser does not support the audio tag.
+                        </audio>
                 </div>
             )}
         </div>
