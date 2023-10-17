@@ -6,6 +6,8 @@ import ChatBox from './ChatBox';
 import Button from './components/Button.jsx'
 import VoiceToText from './components/VoiceToText';
 
+require('dotenv').config();
+
 function App() {
   return (
     <div className="App">

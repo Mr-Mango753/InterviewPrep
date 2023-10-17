@@ -15,7 +15,7 @@ const ChatBox = () => {
         model: 'text-davinci-003'
       }, {
         headers: {
-          'Authorization': 'Bearer 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',
+          'Authorization': 'Bearer ${api_key.env.OPENAI_API_KEY}',
           'Content-Type': 'application/json',
         },
       });
