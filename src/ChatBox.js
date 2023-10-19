@@ -10,18 +10,23 @@ const ChatBox = () => {
     try {
       // Send user message to the OpenAI API
       const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-        prompt: newMessage,
+        "messages": [
+          {
+            "role": "user",
+            "content": newMessage
+          }
+        ],
         max_tokens: 50,
-        model: 'text-davinci-003'
+        model: 'gpt-3.5-turbo'
       }, {
         headers: {
-          'Authorization': 'Bearer ${api_key.env.OPENAI_API_KEY}',
+          'Authorization': 'Bearer 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', //${api_key.env.OPENAI_API_KEY}',
           'Content-Type': 'application/json',
         },
       });
   
       // Extract the AI response from the API response
-      const responseText = response.data.choices[0].text;
+      const responseText = response.data.choices[0].message.content;
       console.log(responseText);
   
       // Update the chat interface
