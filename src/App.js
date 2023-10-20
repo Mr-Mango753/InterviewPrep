@@ -8,7 +8,7 @@ import VoiceToText from './components/VoiceToText.jsx';
 import React from 'react';
 import axios from 'axios';
 
-// require('dotenv').config();
+require('dotenv').config();
 
 function App() {
   return (

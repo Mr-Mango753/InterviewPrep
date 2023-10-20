@@ -2,11 +2,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+require('dotenv').config();
+
 const ChatBox = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
 
   const handleSendMessage = async () => {
+    console.log('Bearer ' + process.env.REACT_APP_OPENAI_API_KEY)
     try {
       // Send user message to the OpenAI API
       const response = await axios.post('https://api.openai.com/v1/chat/completions', {
@@ -20,7 +23,7 @@ const ChatBox = () => {
         model: 'gpt-3.5-turbo'
       }, {
         headers: {
-          'Authorization': 'Bearer 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', //${api_key.env.OPENAI_API_KEY}',
+          'Authorization': 'Bearer ' + process.env.REACT_APP_OPENAI_API_KEY,
           'Content-Type': 'application/json',
         },
       });
