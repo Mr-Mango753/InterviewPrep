@@ -3,14 +3,16 @@ from flask_cors import CORS
 from transformers import AutoProcessor, BarkModel
 import scipy
 import os
-import uuid
 
 app = Flask(__name__, static_folder="audio_files")
-CORS(app)
+cors = CORS(app, resources={r"/generate_audio": {"origins": "http://localhost:3000"}})
 
+# CORS(app)
+# os.environ['SUNO_USE_SMALL_MODELS'] = 'True'
+os.environ["SUNO_OFFLOAD_CPU"] = "True"
+os.environ["SUNO_USE_SMALL_MODELS"] = "True"
 processor = AutoProcessor.from_pretrained("suno/bark")
 model = BarkModel.from_pretrained("suno/bark")
-
 AUDIO_FOLDER = "audio_files"
 print(os.path.abspath(AUDIO_FOLDER))
 
@@ -23,14 +25,9 @@ def generate_audio():
         inputs = processor(text, voice_preset=voice_preset)
         audio_array = model.generate(**inputs)
         audio_array = audio_array.cpu().numpy().squeeze()
-
-        # Use UUID to generate a unique filename for every request
-        # output_filename = os.path.join(AUDIO_FOLDER, f"{uuid.uuid4()}.wav")
         output_filename = os.path.join(AUDIO_FOLDER, f"audio1.wav")
         sample_rate = model.generation_config.sample_rate
         scipy.io.wavfile.write(output_filename, rate=sample_rate, data=audio_array)
-
-        # Return only the filename part, as the frontend will use a predefined path to fetch it
         return jsonify({"audio_file": os.path.basename(output_filename)})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -40,10 +37,10 @@ def serve_audio_file(filename):
     """Serve the audio file to the frontend."""
     return send_from_directory(AUDIO_FOLDER, filename)
 
-@app.route('/test_audio', methods=['GET'])
-def test_audio():
-    """Serve a specific audio file."""
-    return send_from_directory(AUDIO_FOLDER, "audio1.wav")
+# @app.route('/test_audio', methods=['GET'])
+# def test_audio():
+#     """Serve a specific audio file."""
+#     return send_from_directory(AUDIO_FOLDER, "audio1.wav")
 
 @app.route('/simple_test')
 def simple_test():

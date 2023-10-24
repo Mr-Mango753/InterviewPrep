@@ -5,6 +5,10 @@ const VoiceToText = () => {
     const [isListening, setIsListening] = useState(false);
     const [audioFile, setAudioFile] = useState(null);
 
+    const handleTranscriptChange = (e) => {
+        setTranscript(e.target.value);
+    };
+
     const handleStart = () => {
         if (window.SpeechRecognition || window.webkitSpeechRecognition) {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -56,7 +60,7 @@ const VoiceToText = () => {
             <button className="voice-to-text-button" onClick={handleStart}>
                 {isListening ? 'Listening...' : 'Start Listening'}
             </button>
-            <textarea value={transcript} readOnly placeholder="Transcription will appear here..."></textarea>
+            <textarea onChange={handleTranscriptChange}  value={transcript} placeholder="Transcription will appear here..."></textarea>
             
             {transcript && (
                 <button onClick={handleGenerateAudio}>
