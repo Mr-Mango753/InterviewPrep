@@ -2,26 +2,34 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+require('dotenv').config();
+
 const ChatBox = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
 
   const handleSendMessage = async () => {
+    console.log('Bearer ' + process.env.REACT_APP_OPENAI_API_KEY)
     try {
       // Send user message to the OpenAI API
       const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-        prompt: newMessage,
+        "messages": [
+          {
+            "role": "user",
+            "content": newMessage
+          }
+        ],
         max_tokens: 50,
-        model: 'text-davinci-003'
+        model: 'gpt-3.5-turbo'
       }, {
         headers: {
-          'Authorization': 'Bearer ${api_key.env.OPENAI_API_KEY}',
+          'Authorization': 'Bearer ' + process.env.REACT_APP_OPENAI_API_KEY,
           'Content-Type': 'application/json',
         },
       });
   
       // Extract the AI response from the API response
-      const responseText = response.data.choices[0].text;
+      const responseText = response.data.choices[0].message.content;
       console.log(responseText);
   
       // Update the chat interface
