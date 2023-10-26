@@ -16,7 +16,7 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 # CORS(app)
 # os.environ['SUNO_USE_SMALL_MODELS'] = 'True'
 # os.environ["SUNO_OFFLOAD_CPU"] = "True"
-# os.environ["SUNO_USE_SMALL_MODELS"] = "True"
+os.environ["SUNO_USE_SMALL_MODELS"] = "True"
 processor = AutoProcessor.from_pretrained("suno/bark")
 model = BarkModel.from_pretrained("suno/bark")
 AUDIO_FOLDER = "audio_files"
@@ -78,4 +78,4 @@ if __name__ == '__main__':
     if not os.path.exists(AUDIO_FOLDER):
         os.makedirs(AUDIO_FOLDER)
 
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0', port=5001)
