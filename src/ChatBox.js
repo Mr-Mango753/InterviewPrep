@@ -1,43 +1,35 @@
-// src/components/ChatBox.js
-import React, { useState } from 'react';
-import axios from 'axios';
-
-require('dotenv').config();
+import React, { useState, useEffect } from 'react';
+import { sendMessageToAI } from './utils/GptAPI';
 
 const ChatBox = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
 
-  const handleSendMessage = async () => {
-    console.log('Bearer ' + process.env.REACT_APP_OPENAI_API_KEY)
+  useEffect(() => {
+    const initialContext = {
+      "role": "system",
+      "content": "You are an interviewer for a major Software Engineering company." + 
+      " You are here today to assess the user on their behavior through a behavioral test. ONLY act as the interviewer and AWAIT THEIR MESSAGE. Start with asking their introduction. "
+    };
+    console.log("Use Effect")
+    gptCall([initialContext]); 
+  }, []);
+
+  const gptCall = async (newMessages) => {
     try {
-      // Send user message to the OpenAI API
-      const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-        "messages": [
-          {
-            "role": "user",
-            "content": newMessage
-          }
-        ],
-        max_tokens: 50,
-        model: 'gpt-3.5-turbo'
-      }, {
-        headers: {
-          'Authorization': 'Bearer ' + process.env.REACT_APP_OPENAI_API_KEY,
-          'Content-Type': 'application/json',
-        },
-      });
-  
-      // Extract the AI response from the API response
-      const responseText = response.data.choices[0].message.content;
-      console.log(responseText);
-  
-      // Update the chat interface
-      setMessages([...messages, { text: newMessage, user: true }, { text: responseText, user: false }]);
-      setNewMessage('');
+      const responseText = await sendMessageToAI(newMessages);
+      setMessages([...newMessages, { "role": "assistant", "content": responseText }]);
+      console.log(messages)
     } catch (error) {
-        console.error('Error sending message to OpenAI API:', error.response.status, error.response.data);
-      // Handle the error as needed (e.g., show an error message to the user)
+      console.error('Error:', error);
+    }
+  }
+
+  const handleSendMessage = async () => {
+    if (newMessage.trim()) {
+      const updatedMessages = [...messages, { "role": "user", "content": newMessage }];
+      gptCall(updatedMessages);
+      setNewMessage('');
     }
   };
 
@@ -45,8 +37,8 @@ const ChatBox = () => {
     <div>
       <div className="chat-container">
         {messages.map((message, index) => (
-          <div key={index} className={message.user ? 'user-message' : 'ai-message'}>
-            {message.text}
+          <div key={index} className={message.role === "user" ? 'user-message' : 'ai-message'}>
+            {message.content}
           </div>
         ))}
       </div>
