@@ -1,15 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { sendMessageToAI } from './utils/GptAPI';
+//import VoiceToText, { sendTranscriptToBackend } from './components/VoiceToText.jsx';
 
-const ChatBox = () => {
+const ChatBox = ({ setTranscript, setUserSpeech, userSpeech }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
+
+  useEffect(() => {
+    if (userSpeech) {
+      // Automatically click the button when userSpeech is not empty
+      setNewMessage(userSpeech);
+      handleSendMessage();
+    }
+  }, [userSpeech]);
 
   useEffect(() => {
     const initialContext = {
       "role": "system",
       "content": "You are an interviewer for a major Software Engineering company." + 
-      " You are here today to assess the user on their behavior through a behavioral test. ONLY act as the interviewer and AWAIT THEIR MESSAGE. Start with asking their introduction. "
+      " You are here today to assess the user on their behavior through a behavioral test. ONLY act as the interviewer and AWAIT THEIR MESSAGE." +
+      " Start with asking their introduction. No need to say you are the interviewer, we know."
     };
     console.log("Use Effect")
     gptCall([initialContext]); 
@@ -19,7 +29,11 @@ const ChatBox = () => {
     try {
       const responseText = await sendMessageToAI(newMessages);
       setMessages([...newMessages, { "role": "assistant", "content": responseText }]);
-      console.log(messages)
+      console.log(messages);
+
+      setTranscript(responseText);
+
+      document.getElementById('generate-audio-button').click();
     } catch (error) {
       console.error('Error:', error);
     }
@@ -45,7 +59,7 @@ const ChatBox = () => {
       <input
         type="text"
         placeholder="Type your message..."
-        value={newMessage}
+        value={userSpeech}
         onChange={(e) => setNewMessage(e.target.value)}
       />
       <button className="chat-button" onClick={handleSendMessage}>Send</button>

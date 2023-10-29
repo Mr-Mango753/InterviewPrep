@@ -5,19 +5,23 @@ import CameraComponent from './components/CameraComponent';
 import ChatBox from './ChatBox';
 import Button from './components/Button.jsx'
 import VoiceToText from './components/VoiceToText.jsx';
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 // require('dotenv').config();
 
 function App() {
+
+  const [transcript, setTranscript] = useState('');
+  const [userSpeech, setUserSpeech] = useState('');
+
   return (
     <div className="App">
       <header className="App-header">
-        <ChatBox />
+        <ChatBox setTranscript={setTranscript} userSpeech={userSpeech} />
         <CameraComponent />
         <Button />
-        <VoiceToText />
+        <VoiceToText transcript={transcript} setTranscript={setTranscript} setUserSpeech={setUserSpeech} userSpeech={userSpeech} />
       </header>
     </div>
   );

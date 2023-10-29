@@ -1,9 +1,17 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
-const VoiceToText = () => {
-    const [transcript, setTranscript] = useState('');
+// FOR NOW - TRANSCRIPT IS THE GPT RESPONSE INTO AUDIO, USERSPEECH IS THE SPEECH FROM USER GOING INTO GPT
+
+const VoiceToText = ({ transcript, setTranscript, setUserSpeech }) => {
     const [isListening, setIsListening] = useState(false);
     const [audioFile, setAudioFile] = useState(null);
+
+    useEffect(() => {
+        if (transcript) {
+          // Automatically click the button when transcript is not empty
+          handleGenerateAudio();
+        }
+    }, [transcript]);
 
     const handleTranscriptChange = (e) => {
         setTranscript(e.target.value);
@@ -31,13 +39,14 @@ const VoiceToText = () => {
             recognitionRef.current.onstart = () => setIsListening(true);
 
             recognitionRef.current.onresult = (event) => {
-                let finalTranscript = '';
+                let finalSpeech = '';
                 for (let i = 0; i < event.results.length; i++) {
                     if (event.results[i].isFinal) {
-                        finalTranscript += event.results[i][0].transcript;
+                        finalSpeech += event.results[i][0].transcript;
                     }
                 }
-                setTranscript(finalTranscript);
+                setUserSpeech(finalSpeech); // THIS NEEDS TO CHANGE TO A SEPARATE VARIABLE FOR THE SPEECH TO TEXT INTO 
+                console.log(finalSpeech);
             };
 
             recognitionRef.current.onerror = (event) => {
@@ -122,11 +131,13 @@ const VoiceToText = () => {
 
     return (
         <div>
-            <button className="voice-to-text-button" onClick={isListening ? handleStop : handleStart}>
+            <button id="generate-audio-button" className="voice-to-text-button" 
+                onClick={isListening ? handleStop : handleStart}>
                 {isListening ? 'Stop Listening' : 'Start Listening'}
             </button>
             <textarea 
-                onChange={handleTranscriptChange}  
+                id='text-area-placeholder'
+                onChange={handleTranscriptChange} 
                 value={transcript} 
                 placeholder="Transcription will appear here..."
             ></textarea>

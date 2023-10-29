@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const apiKey = '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';
+const apiKey = "" + process.env.REACT_APP_OPENAI_API_KEY;
 
 const sendMessageToAI = async (message) => {
   try {
