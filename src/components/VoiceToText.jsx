@@ -45,8 +45,10 @@ const VoiceToText = ({ transcript, setTranscript, setUserSpeech }) => {
                         finalSpeech += event.results[i][0].transcript;
                     }
                 }
-                setUserSpeech(finalSpeech); // THIS NEEDS TO CHANGE TO A SEPARATE VARIABLE FOR THE SPEECH TO TEXT INTO 
-                console.log(finalSpeech);
+                if(finalSpeech != '') {
+                    console.log('finalspeech in voicetotext: ' + finalSpeech);
+                    setUserSpeech(finalSpeech); // puts non-null user speech into the userSpeech variable accessible to gpt
+                }
             };
 
             recognitionRef.current.onerror = (event) => {

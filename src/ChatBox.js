@@ -9,10 +9,18 @@ const ChatBox = ({ setTranscript, setUserSpeech, userSpeech }) => {
   useEffect(() => {
     if (userSpeech) {
       // Automatically click the button when userSpeech is not empty
+      console.log('user speech in gpt: ' + userSpeech);
       setNewMessage(userSpeech);
-      handleSendMessage();
     }
   }, [userSpeech]);
+  
+  useEffect(() => {
+    // Only call handleSendMessage when newMessage changes
+    if (newMessage) {
+      console.log('new message in gpt: ' + newMessage);
+      handleSendMessage();
+    }
+  }, [newMessage]);
 
   useEffect(() => {
     const initialContext = {
