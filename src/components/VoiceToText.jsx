@@ -105,7 +105,7 @@ const VoiceToText = ({ transcript, setTranscript, setUserSpeech }) => {
 
         const headers = {
             "Content-Type": "application/json",
-            "xi-api-key": "90f243496030d72555ab71751a9d839f"
+            "xi-api-key": "ade7f1e13d6db219bf8d558f598c77b5"
         };
 
         try {
