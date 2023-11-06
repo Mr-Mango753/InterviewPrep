@@ -1,10 +1,16 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './Button.css';
 
-function Button() {
+function Button({setInterviewInProgress}) {
+  // const [value, setValue] = useState()
+  const handleEndInterview = () => {
+    console.log("Ending Interview");
+    setInterviewInProgress(false);
+  };
+
   return (
-    <button type="button" className="custom-btn">
-      Join Interview
+    <button onClick={handleEndInterview}  type="button" className="custom-btn">
+      End Interview
     </button>
   );
 }

@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { sendMessageToAI } from './utils/GptAPI';
 //import VoiceToText, { sendTranscriptToBackend } from './components/VoiceToText.jsx';
 
-const ChatBox = ({ setTranscript, setUserSpeech, userSpeech }) => {
-  const [messages, setMessages] = useState([]);
+const ChatBox = ({ setTranscript, userSpeech, messages, setMessages }) => {
   const [newMessage, setNewMessage] = useState('');
 
   useEffect(() => {
@@ -29,7 +28,6 @@ const ChatBox = ({ setTranscript, setUserSpeech, userSpeech }) => {
       " You are here today to assess the user on their behavior through a behavioral test. ONLY act as the interviewer and AWAIT THEIR MESSAGE." +
       " Start with asking their introduction. No need to say you are the interviewer, we know."
     };
-    console.log("Use Effect")
     gptCall([initialContext]); 
   }, []);
 
