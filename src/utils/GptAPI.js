@@ -8,7 +8,7 @@ const sendMessageToAI = async (message) => {
   try {
     const response = await axios.post('https://api.openai.com/v1/chat/completions', {
       "messages": message,
-      max_tokens: 50,
+      max_tokens: 100,
       model: 'gpt-3.5-turbo'
     }, {
       headers: {

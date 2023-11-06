@@ -34,7 +34,7 @@ function App() {
       </header>
     ) : (
       <header className='App-header'>
-        <Evaluation />
+        <Evaluation messages={messages}/>
       </header>
     )}
     </div>
