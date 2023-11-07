@@ -165,7 +165,7 @@ const VoiceToText = ({ transcript, setTranscript, setUserSpeech }) => {
             {audioFile && (
                 <div>
                     <h3>Your Generated Audio File:</h3>
-                    <audio controls src={audioFile} onClick={isListening ? handleStop : handleStart}>
+                    <audio controls src={audioFile}>
                         Your browser does not support the audio tag.
                     </audio>
                 </div>
