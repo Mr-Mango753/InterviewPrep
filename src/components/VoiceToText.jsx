@@ -25,10 +25,6 @@ const VoiceToText = ({ transcript, setTranscript, setUserSpeech }) => {
     }
   }, [isButtonDisabled]);
 
-    const handleTranscriptChange = (e) => {
-        setTranscript(e.target.value);
-    };
-
     const recognitionRef = useRef(null);  // Using useRef for recognition
 
     const handleStop = () => {
@@ -145,6 +141,8 @@ const VoiceToText = ({ transcript, setTranscript, setUserSpeech }) => {
         } catch (error) {
             console.error('Error sending transcript to Eleven Labs:', error);
         }
+
+        handleStop();
     };
 
     return (
@@ -155,12 +153,6 @@ const VoiceToText = ({ transcript, setTranscript, setUserSpeech }) => {
                 disabled={isButtonDisabled}>
                 {isListening ? 'Stop Listening' : 'Start Listening'}
             </button>
-            <textarea 
-                id='text-area-placeholder'
-                onChange={handleTranscriptChange} 
-                value={transcript} 
-                placeholder="Transcription will appear here..."
-            ></textarea>
     
             {audioFile && (
                 <div>
