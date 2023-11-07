@@ -6,6 +6,7 @@ import Button from './components/Button.jsx'
 import VoiceToText from './components/VoiceToText.jsx';
 import React, { useState, useEffect } from 'react';
 import Evaluation from './components/Evaluation';
+import ResumeUpload from './components/ResumeUpload';
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
         <ChatBox setTranscript={setTranscript} userSpeech={userSpeech} messages={messages} setMessages={setMessages}/>
         <CameraComponent />
         <Button setInterviewInProgress={setInterviewInProgress}/>
+        <ResumeUpload />
         <VoiceToText transcript={transcript} setTranscript={setTranscript} setUserSpeech={setUserSpeech} userSpeech={userSpeech} />
       </header>
     ) : (
