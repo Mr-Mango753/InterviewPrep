@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
+import './VoiceToText.css';
 
 // FOR NOW - TRANSCRIPT IS THE GPT RESPONSE INTO AUDIO, USERSPEECH IS THE SPEECH FROM USER GOING INTO GPT
 
 const VoiceToText = ({ transcript, setTranscript, setUserSpeech }) => {
     const [isListening, setIsListening] = useState(false);
     const [audioFile, setAudioFile] = useState(null);
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
     useEffect(() => {
         if (transcript) {
@@ -12,6 +14,16 @@ const VoiceToText = ({ transcript, setTranscript, setUserSpeech }) => {
           handleGenerateAudio();
         }
     }, [transcript]);
+
+    useEffect(() => {
+    if (isButtonDisabled) {
+      const timeout = setTimeout(() => {
+        setIsButtonDisabled(false);
+      }, 2000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [isButtonDisabled]);
 
     const handleTranscriptChange = (e) => {
         setTranscript(e.target.value);
@@ -21,6 +33,7 @@ const VoiceToText = ({ transcript, setTranscript, setUserSpeech }) => {
 
     const handleStop = () => {
         setIsListening(false);
+        setIsButtonDisabled(true);
         if (recognitionRef.current) {
             recognitionRef.current.onresult = null;  // Ensure no more results are processed
             recognitionRef.current.stop();
@@ -28,36 +41,39 @@ const VoiceToText = ({ transcript, setTranscript, setUserSpeech }) => {
     };
 
     const handleStart = () => {
-        if (window.SpeechRecognition || window.webkitSpeechRecognition) {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (!recognitionRef.current) {
-                recognitionRef.current = new SpeechRecognition();
-                recognitionRef.current.continuous = true;
-                recognitionRef.current.interimResults = true;
-            }
+        if(isListening === false){
+            if (window.SpeechRecognition || window.webkitSpeechRecognition) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                if (!recognitionRef.current) {
+                    recognitionRef.current = new SpeechRecognition();
+                    recognitionRef.current.continuous = true;
+                    recognitionRef.current.interimResults = true;
+                }
 
-            recognitionRef.current.onstart = () => setIsListening(true);
+                setIsListening(true);
+                recognitionRef.current.onstart = () => setIsListening(true);
 
-            recognitionRef.current.onresult = (event) => {
-                let finalSpeech = '';
-                for (let i = 0; i < event.results.length; i++) {
-                    if (event.results[i].isFinal) {
-                        finalSpeech += event.results[i][0].transcript;
+                recognitionRef.current.onresult = (event) => {
+                    let finalSpeech = '';
+                    for (let i = 0; i < event.results.length; i++) {
+                        if (event.results[i].isFinal) {
+                            finalSpeech += event.results[i][0].transcript;
+                        }
                     }
-                }
-                if(finalSpeech != '') {
-                    console.log('finalspeech in voicetotext: ' + finalSpeech);
-                    setUserSpeech(finalSpeech); // puts non-null user speech into the userSpeech variable accessible to gpt
-                }
-            };
+                    if(finalSpeech !== '') {
+                        console.log('finalspeech in voicetotext: ' + finalSpeech);
+                        setUserSpeech(finalSpeech); // puts non-null user speech into the userSpeech variable accessible to gpt
+                    }
+                };
 
-            recognitionRef.current.onerror = (event) => {
-                console.error("Error occurred in recognition:", event.error);
-            };
+                recognitionRef.current.onerror = (event) => {
+                    console.error("Error occurred in recognition:", event.error);
+                };
 
-            recognitionRef.current.start();
-        } else {
-            alert("Your browser does not support the Web Speech API. Please try a different browser.");
+                recognitionRef.current.start();
+            } else {
+                alert("Your browser does not support the Web Speech API. Please try a different browser.");
+            }
         }
     };
     
@@ -105,7 +121,7 @@ const VoiceToText = ({ transcript, setTranscript, setUserSpeech }) => {
 
         const headers = {
             "Content-Type": "application/json",
-            "xi-api-key": "ade7f1e13d6db219bf8d558f598c77b5"
+            "xi-api-key": "321547ec48256661cb0b640353bde72c"
         };
 
         try {
@@ -133,8 +149,10 @@ const VoiceToText = ({ transcript, setTranscript, setUserSpeech }) => {
 
     return (
         <div>
-            <button id="generate-audio-button" className="voice-to-text-button" 
-                onClick={isListening ? handleStop : handleStart}>
+            <button id="generate-audio-button"
+                className={`voice-to-text-button ${isButtonDisabled ? 'disabled' : ''}`}
+                onClick={isListening ? handleStop : handleStart}
+                disabled={isButtonDisabled}>
                 {isListening ? 'Stop Listening' : 'Start Listening'}
             </button>
             <textarea 
@@ -143,17 +161,11 @@ const VoiceToText = ({ transcript, setTranscript, setUserSpeech }) => {
                 value={transcript} 
                 placeholder="Transcription will appear here..."
             ></textarea>
-            
-            {transcript && (
-                <button onClick={handleGenerateAudio}>
-                    Generate Audio
-                </button>
-            )}
     
             {audioFile && (
                 <div>
                     <h3>Your Generated Audio File:</h3>
-                    <audio controls src={audioFile}>
+                    <audio controls src={audioFile} onClick={isListening ? handleStop : handleStart}>
                         Your browser does not support the audio tag.
                     </audio>
                 </div>

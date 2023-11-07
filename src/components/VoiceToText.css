@@ -1,0 +1,13 @@
+/* VoiceToText.css */
+.voice-to-text-button {
+  /* Your regular button styles */
+  background-color: #007bff;
+  color: #fff;
+  /* Add any other styles you want */
+}
+
+.voice-to-text-button.disabled {
+  /* Styles for the disabled button */
+  background-color: #ccc; /* Gray out the button */
+  cursor: not-allowed; /* Change the cursor to indicate it's disabled */
+}
