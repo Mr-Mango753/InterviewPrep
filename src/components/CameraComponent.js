@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import Webcam from 'react-webcam';
+import './CameraComponent.css';
 
 const CameraComponent = () => {
   const webcamRef = useRef(null);
@@ -27,8 +28,9 @@ const CameraComponent = () => {
         ref={webcamRef}
         mirrored={true} 
       />
-      <button className="cam-mic-button" onClick={toggleCamera}>
-        {isCameraOn ? "Turn Camera Off" : "Turn Camera On"}
+      <button 
+        className={`cam-mic-button ${isCameraOn ? '' : 'camera-off'}`} 
+        onClick={toggleCamera}>
       </button>
     </div>
   );

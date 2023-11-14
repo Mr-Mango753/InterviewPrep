@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import mammoth from 'mammoth';
 
-const ResumeUpload = () => {
+const ResumeUpload = ({setUserSpeech}) => {
   const [docxFile, setDocxFile] = useState(null);
   const [docxText, setDocxText] = useState('');
 
@@ -30,6 +30,7 @@ const ResumeUpload = () => {
   const handleSubmit = () => {
     console.log(docxText);
     alert('Text data is logged to the console.');
+    setUserSpeech(docxText);
   };
 
   return (
