@@ -14,16 +14,18 @@ const Evaluation = ({ messages }) => {
 
       const initialContext = {
         role: "system",
-        content: "You are a senior software developer at a large software company. " + 
-        "Evaluate the user in the interview transcript. Focus on 8 aspects in your evaluation: " +
-        "Motivation, Ability to be Proactive, Able to work in an unstructured environment, Perseverance, " +
-        "Empathy, and Communication."
+        content: "You are a lead software engineer at a major tech company." +
+        " You are being given a transcript from a recent interview between a software developer at your company and a candidate for a Software Engineering role." +
+        " Evaluate the candidate based on 8 factors: Motivation, Ability to be Proactive, Able to work in an unstructured environment, Perseverance, Empathy, and Communication." +
+        " You are ONLY EVALUATING the USER. You are NOT the user or the candidate or the interviewer."
       };
 
       const interviewTranscript = {
         role: "user",
         content: transcript
       };
+
+      console.log([initialContext, interviewTranscript])
 
       // Now call the API and wait for the response before setting the state
       const response = await gptCall([initialContext, interviewTranscript]);
@@ -48,7 +50,7 @@ const Evaluation = ({ messages }) => {
 
   return (
     <div>
-      {gptMessages} {/* Render the message directly as it's now a string */}
+      {gptMessages}
     </div>
   );
 };
