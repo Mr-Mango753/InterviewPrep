@@ -3,7 +3,10 @@ from flask_cors import CORS
 from openai import OpenAI
 import os
 
-client = OpenAI(api_key='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')
+api_key = os.environ.get('REACT_APP_OPENAI_API_KEY')
+if not api_key:
+    raise ValueError("No API key set for OpenAI")
+client = OpenAI(api_key=api_key)
 
 app = Flask(__name__)
 CORS(app)
