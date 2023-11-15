@@ -10,7 +10,6 @@ const VoiceToText = ({ transcript, setTranscript, setUserSpeech }) => {
 
     useEffect(() => {
         if (transcript) {
-          // Automatically click the button when transcript is not empty
           handleGenerateAudio();
         }
     }, [transcript]);
@@ -25,13 +24,13 @@ const VoiceToText = ({ transcript, setTranscript, setUserSpeech }) => {
     }
   }, [isButtonDisabled]);
 
-    const recognitionRef = useRef(null);  // Using useRef for recognition
+    const recognitionRef = useRef(null); 
 
     const handleStop = () => {
         setIsListening(false);
         setIsButtonDisabled(true);
         if (recognitionRef.current) {
-            recognitionRef.current.onresult = null;  // Ensure no more results are processed
+            recognitionRef.current.onresult = null;  
             recognitionRef.current.stop();
         }
     };
@@ -78,72 +77,72 @@ const VoiceToText = ({ transcript, setTranscript, setUserSpeech }) => {
         sendTranscriptToBackend(transcript);
     };
 
-    // const sendTranscriptToBackend = async (text) => {
-    //     const backendUrl = 'http://127.0.0.1:5001/generate_audio';
-
-    //     try {
-    //         const response = await fetch(backendUrl, {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json'
-    //             },
-    //             body: JSON.stringify({ text: text })
-    //         });
-
-    //         if (!response.ok) {
-    //             throw new Error(`HTTP error! status: ${response.status} ${response.statusText}`);
-    //         }
-
-    //         const responseData = await response.json();
-    //         setAudioFile(responseData.audio_file);
-
-    //     } catch (error) {
-    //         console.error('Error sending transcript to backend:', error);
-    //     }
-    // };
-    
     const sendTranscriptToBackend = async (text) => {
-        const apiUrl = "https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM";
-        const payload = {
-            "text": text,
-            "model_id": "eleven_monolingual_v1",
-            "voice_settings": {
-                "stability": 0,
-                "similarity_boost": 0,
-                "style": 0,
-                "use_speaker_boost": true
-            }
-        };
-
-        const headers = {
-            "Content-Type": "application/json",
-            "xi-api-key": "321547ec48256661cb0b640353bde72c"
-        };
+        const backendUrl = 'http://127.0.0.1:5000/generate_speech';
 
         try {
-            const response = await fetch(apiUrl, {
+            const response = await fetch(backendUrl, {
                 method: 'POST',
-                headers: headers,
-                body: JSON.stringify(payload)
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ text: text })
             });
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status} ${response.statusText}`);
             }
 
-            const audioBlob = await response.blob();
-            const audioUrl = URL.createObjectURL(audioBlob);
-            setAudioFile(audioUrl);
-            console.log('Response:', response);
-            console.log('Audio Blob:', audioBlob);
-            console.log('Audio URL:', audioUrl);
+            const responseData = await response.json();
+            setAudioFile(responseData.audio_file);
 
         } catch (error) {
-            console.error('Error sending transcript to Eleven Labs:', error);
+            console.error('Error sending transcript to backend:', error);
         }
-
-        handleStop();
     };
+    
+    // const sendTranscriptToBackend = async (text) => {
+    //     const apiUrl = "https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM";
+    //     const payload = {
+    //         "text": text,
+    //         "model_id": "eleven_monolingual_v1",
+    //         "voice_settings": {
+    //             "stability": 0,
+    //             "similarity_boost": 0,
+    //             "style": 0,
+    //             "use_speaker_boost": true
+    //         }
+    //     };
+
+    //     const headers = {
+    //         "Content-Type": "application/json",
+    //         "xi-api-key": "321547ec48256661cb0b640353bde72c"
+    //     };
+
+    //     try {
+    //         const response = await fetch(apiUrl, {
+    //             method: 'POST',
+    //             headers: headers,
+    //             body: JSON.stringify(payload)
+    //         });
+
+    //         if (!response.ok) {
+    //             throw new Error(`HTTP error! status: ${response.status} ${response.statusText}`);
+    //         }
+
+    //         const audioBlob = await response.blob();
+    //         const audioUrl = URL.createObjectURL(audioBlob);
+    //         setAudioFile(audioUrl);
+    //         console.log('Response:', response);
+    //         console.log('Audio Blob:', audioBlob);
+    //         console.log('Audio URL:', audioUrl);
+
+    //     } catch (error) {
+    //         console.error('Error sending transcript to Eleven Labs:', error);
+    //     }
+
+    //     handleStop();
+    // };
 
     return (
         <div>
