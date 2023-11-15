@@ -4,19 +4,9 @@ import { sendMessageToAI } from './utils/GptAPI';
 
 const ChatBox = ({ setTranscript, userSpeech, messages, setMessages }) => {
   const [newMessage, setNewMessage] = useState('');
-<<<<<<< HEAD
-  const [timer, setTimer] = useState(0);
-  var responses = 0;
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTimer((prevTimer) => prevTimer + 1);
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
-=======
+//  const [timer, setTimer] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState('');
+  var responses = 0;
 
   // The categories mapping
 const categories = {
@@ -73,11 +63,17 @@ const exampleQuestionsAndAnswers = {
 };
 
 // Example usage:
-console.log(categories["Motivation"]); // Output the description for the "Motivation" category
-console.log(exampleQuestionsAndAnswers["Motivation"]["Example Questions"]); // Output the example questions for the "Motivation" category
+//console.log(categories["Motivation"]); // Output the description for the "Motivation" category
+//console.log(exampleQuestionsAndAnswers["Motivation"]["Example Questions"]); // Output the example questions for the "Motivation" category
 
   
->>>>>>> 883f3f57e06acab15ff6c273737cc454708db7a8
+/*useEffect(() => {
+  const interval = setInterval(() => {
+    setTimer((prevTimer) => prevTimer + 1);
+  }, 1000);
+
+  return () => clearInterval(interval);
+}, []);*/
 
   useEffect(() => {
     if (userSpeech) {
@@ -96,6 +92,14 @@ console.log(exampleQuestionsAndAnswers["Motivation"]["Example Questions"]); // O
     }
   }, [newMessage]);
 
+  useEffect(() => {
+    const initialContext = {
+      "role": "system",
+      "content": getInitialContext()
+    };
+    gptCall([initialContext]); 
+  }, []);
+
   // Define the base part of the initial context
   const baseContext = "You are an interview for a major Software Engineering company. " +
     "You are here today to assess the user on their behavior through a behavioral test. ONLY act as the interviewer and AWAIT THEIR MESSAGE. " +
@@ -103,7 +107,7 @@ console.log(exampleQuestionsAndAnswers["Motivation"]["Example Questions"]); // O
     "When you are interacting with the candidate, please act empathetic but firm in your questions. " +
     "If the candidate's answer is inappropriate, please feel free to either remind them they are in an interview or thank them for their time. " +
     "If the candidate's answer is great, please feel free to strike a happier tone with them. " +
-    "After approximately 20 questions, end the interview and thank them for their time. " +
+    "After asking for an introduction, ask them to hand you their resume. " +
     "Last reminder: You are here today to assess the user on their behavior through a behavioral test. ONLY act as the interviewer and AWAIT THEIR MESSAGE." +
     "You will be assessing the candidate on their general communication skills. Are they able to clearly communicate their stories during the interview? Generally covered during the interview as to how clearly they are explaining the stories. There is also some overlap with Empathy and how they communicate with others.";
 
@@ -112,24 +116,6 @@ console.log(exampleQuestionsAndAnswers["Motivation"]["Example Questions"]); // O
     let additionalContext = "The main focus area you will assess is their " + selectedCategory + ". " + categories[selectedCategory] + exampleQuestionsAndAnswers[selectedCategory] || '';
     return baseContext + additionalContext;
   };
-
-  useEffect(() => {
-    const initialContext = {
-      "role": "system",
-<<<<<<< HEAD
-      "content": "You are an interview for a major Software Engineering company." + 
-      " You are here today to assess the user on their behavior through a behavioral test. ONLY act as the interviewer and AWAIT THEIR MESSAGE." +
-      " Start with asking their introduction. No need to say you are the interviewer, we know. After they introduce themselves, ask for their resume." +
-      " When you are interacting with the candidate, please act empathetic but firm in your questions." +
-      " If the candidate's answer is inappropriate, please feel free to either remind them they are an in interview or thank them for their time." +
-      " If the candidate's answer is great, please feel free to strike a happier tone with them." +
-      " Last reminder: You are here today to assess the user on their behavior through a behavioral test. ONLY act as the interview and AWAIT THEIR MESSAGE."
-=======
-      "content": getInitialContext()
->>>>>>> 883f3f57e06acab15ff6c273737cc454708db7a8
-    };
-    gptCall([initialContext]); 
-  });
 
   const gptCall = async (newMessages) => {
     try {
@@ -162,18 +148,6 @@ console.log(exampleQuestionsAndAnswers["Motivation"]["Example Questions"]); // O
           </div>
         ))}
       </div>
-<<<<<<< HEAD
-      <div style={{ position: 'absolute', top: 10, right: 10, color: 'white' }}>
-        <p>{Math.floor(timer / 60)}:{timer % 60 < 10 ? `0${timer % 60}` : timer % 60}</p>
-      </div>
-=======
-    
-      <input
-        type="text"
-        placeholder="your transcriptions appear here..."
-        value={userSpeech}
-        onChange={(e) => setNewMessage(e.target.value)}
-      />
 
       <select value={selectedCategory} onChange={e => setSelectedCategory(e.target.value)}>
         <option value="">Select a category</option>
@@ -184,9 +158,12 @@ console.log(exampleQuestionsAndAnswers["Motivation"]["Example Questions"]); // O
 
 
 
->>>>>>> 883f3f57e06acab15ff6c273737cc454708db7a8
     </div>
   );
 };
+
+/*<div style={{ position: 'absolute', top: 10, right: 10, color: 'white' }}>
+        <p>{Math.floor(timer / 60)}:{timer % 60 < 10 ? `0${timer % 60}` : timer % 60}</p>
+      </div>*/
 
 export default ChatBox;
