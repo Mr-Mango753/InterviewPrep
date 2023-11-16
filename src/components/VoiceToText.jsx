@@ -146,11 +146,12 @@ const VoiceToText = ({ transcript, setTranscript, setUserSpeech }) => {
 
     return (
         <div>
-            <button id="generate-audio-button"
-                className={`voice-to-text-button ${isButtonDisabled ? 'disabled' : ''}`}
+            <button
+                id="generate-audio-button"
+                class={`voice-to-text-button ${isButtonDisabled ? 'disabled' : ''} ${isListening ? 'green' : 'red'}`}
                 onClick={isListening ? handleStop : handleStart}
                 disabled={isButtonDisabled}>
-                {isListening ? 'Stop Listening' : 'Start Listening'}
+                <div class="mic-icon"></div>
             </button>
     
             {audioFile && (

@@ -149,7 +149,14 @@ const exampleQuestionsAndAnswers = {
         ))}
       </div>
 
-      <select value={selectedCategory} onChange={e => setSelectedCategory(e.target.value)}>
+      <select value={selectedCategory} 
+              onChange={e => setSelectedCategory(e.target.value)}
+              style={{
+                padding: '8px',
+                fontSize: '16px',
+                borderRadius: '4px',
+                border: '1px solid #ccc',
+              }}>
         <option value="">Select a category</option>
         {Object.keys(categories).map(category => (
           <option key={category} value={category}>{category}</option>
