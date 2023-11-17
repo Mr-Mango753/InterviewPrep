@@ -7,6 +7,7 @@ const VoiceToText = ({ transcript, setTranscript, setUserSpeech }) => {
     const [isListening, setIsListening] = useState(false);
     const [audioFile, setAudioFile] = useState(null);
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+    const [finalSpeech, setFinalSpeech] = useState(null);
 
     useEffect(() => {
         if (transcript) {
@@ -24,6 +25,14 @@ const VoiceToText = ({ transcript, setTranscript, setUserSpeech }) => {
     }
   }, [isButtonDisabled]);
 
+  useEffect(() => {
+    console.log('is listening? ' + isListening);
+    if(!isListening && finalSpeech != ''){
+        setUserSpeech(finalSpeech); // puts non-null user speech into the userSpeech variable accessible to gpt
+        setFinalSpeech('');
+    }
+  }, [isListening]);
+
     const recognitionRef = useRef(null); 
 
     const handleStop = () => {
@@ -36,7 +45,8 @@ const VoiceToText = ({ transcript, setTranscript, setUserSpeech }) => {
     };
 
     const handleStart = () => {
-        if(isListening === false){
+        let finalSpeech = '';
+        if(!isListening){
             if (window.SpeechRecognition || window.webkitSpeechRecognition) {
                 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
                 if (!recognitionRef.current) {
@@ -48,16 +58,20 @@ const VoiceToText = ({ transcript, setTranscript, setUserSpeech }) => {
                 setIsListening(true);
                 recognitionRef.current.onstart = () => setIsListening(true);
 
+                // automatically on api maybe you can stop the break up when pause
+                // tricks to async waiting for state to update
+                var speech = '';
                 recognitionRef.current.onresult = (event) => {
-                    let finalSpeech = '';
                     for (let i = 0; i < event.results.length; i++) {
                         if (event.results[i].isFinal) {
-                            finalSpeech += event.results[i][0].transcript;
+                            const recentSpeech = event.results[i][0].transcript;
+                            if(!speech.includes(recentSpeech)){
+                                speech += recentSpeech;
+                            }
+                            setFinalSpeech(speech);
+                            // console.log(finalSpeech);
+                            // console.log(speech);
                         }
-                    }
-                    if(finalSpeech !== '') {
-                        console.log('finalspeech in voicetotext: ' + finalSpeech);
-                        setUserSpeech(finalSpeech); // puts non-null user speech into the userSpeech variable accessible to gpt
                     }
                 };
 
@@ -162,6 +176,11 @@ const VoiceToText = ({ transcript, setTranscript, setUserSpeech }) => {
                     </audio>
                 </div>
             )}
+
+            <div className="transcript-display">
+                <h2>Transcript:</h2>
+                <p>{transcript}</p>
+            </div>
         </div>
     );
     

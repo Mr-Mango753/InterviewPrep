@@ -37,6 +37,7 @@
   }
   
   .camera-off {
+    background-image: url('ComponentImages/CameraOFF.jpg');
     background-color: #ff0000;
   }
   

@@ -29,7 +29,7 @@ const CameraComponent = () => {
         mirrored={true} 
       />
       <button 
-        className={`cam-mic-button ${isCameraOn ? '' : 'camera-off'}`} 
+        className={`cam-mic-button ${isCameraOn ? 'camera-on' : 'camera-off'}`} 
         onClick={toggleCamera}>
       </button>
     </div>

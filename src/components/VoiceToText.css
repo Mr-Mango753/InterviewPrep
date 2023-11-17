@@ -33,3 +33,21 @@
 .voice-to-text-button.green .mic-icon {
   background-image: url('ComponentImages/mic-on.png');
 }
+
+.transcript-display {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 10px;
+  background-color: #f9f9f9;
+}
+
+.transcript-display h2 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.transcript-display p {
+  margin: 0;
+  font-size: 16px;
+  color: #555;
+}
