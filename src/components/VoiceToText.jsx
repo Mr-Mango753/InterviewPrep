@@ -92,7 +92,7 @@ const VoiceToText = ({ transcript, setTranscript, setUserSpeech }) => {
     };
 
     const sendTranscriptToBackend = async (text) => {
-        const backendUrl = 'http://127.0.0.1:5000/generate_speech';
+        const backendUrl = 'http://127.0.0.1:5000/run_script';
 
         try {
             const response = await fetch(backendUrl, {
@@ -108,6 +108,7 @@ const VoiceToText = ({ transcript, setTranscript, setUserSpeech }) => {
             }
 
             const responseData = await response.json();
+            console.log(responseData);
             setAudioFile(responseData.audio_file);
 
         } catch (error) {
