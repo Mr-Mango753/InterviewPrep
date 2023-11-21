@@ -33,6 +33,10 @@ function App() {
         <Button setInterviewInProgress={setInterviewInProgress}/>
         <ResumeUpload setUserSpeech={setUserSpeech}/>
         <VoiceToText transcript={transcript} setTranscript={setTranscript} setUserSpeech={setUserSpeech} userSpeech={userSpeech} />
+        {/* <iframe src="http://the-singularity-show.com/pages/CS338/interview.html" title="talkinghead" height="500" width="500"></iframe> */}
+        {/* <object data="http://the-singularity-show.com/pages/CS338/interview.html" width="600" height="400"> */}
+          {/* <embed src="http://the-singularity-show.com/pages/CS338/interview.html" width="600" height="400"> </embed> */}
+      {/* </object> */}
       </header>
     ) : (
       <header className='App-header'>
