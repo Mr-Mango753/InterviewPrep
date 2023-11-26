@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { sendMessageToAI } from './utils/GptAPI';
 //import VoiceToText, { sendTranscriptToBackend } from './components/VoiceToText.jsx';
 
-const ChatBox = ({ setTranscript, userSpeech, messages, setMessages }) => {
+const ChatBox = ({ setTranscript, userSpeech, messages, setMessages, isResumeUploaded }) => {
   const [newMessage, setNewMessage] = useState('');
 //  const [timer, setTimer] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState('');
+  const navigate = useNavigate();
   var responses = 0;
 
   // The categories mapping
@@ -100,6 +103,16 @@ const exampleQuestionsAndAnswers = {
     gptCall([initialContext]); 
   }, []);
 
+  useEffect(() => {
+    // Check if a category is selected and resume is uploaded
+    if (selectedCategory && isResumeUploaded) {
+      // Navigate to the /interview route
+      navigate('/interview');  // For React Router v5
+      // navigate('/interview'); // For React Router v6
+    }
+  }, [selectedCategory, isResumeUploaded, navigate]); // Add navigate to the dependency array for React Router v6
+
+
   // Define the base part of the initial context
   const baseContext = "You are an interview for a major Software Engineering company. " +
     "You are here today to assess the user on their behavior through a behavioral test. ONLY act as the interviewer and AWAIT THEIR MESSAGE. " +
@@ -138,6 +151,8 @@ const exampleQuestionsAndAnswers = {
       setNewMessage('');
     }
   };
+
+  console.log("Chatbox is loading");
 
   return (
     <div>
