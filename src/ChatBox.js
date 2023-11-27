@@ -119,7 +119,7 @@ const exampleQuestionsAndAnswers = {
 
   const gptCall = async (newMessages) => {
     try {
-      const responseText = await sendMessageToAI(newMessages);
+      const responseText = await sendMessageToAI(newMessages, 'gpt-3.5-turbo', 100);
       setMessages([...newMessages, { "role": "assistant", "content": responseText }]);
       console.log(messages);
 
