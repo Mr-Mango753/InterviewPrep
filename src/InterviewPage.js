@@ -4,6 +4,7 @@ import ChatBox from './ChatBox';
 import Button from './components/Button.jsx';
 import VoiceToText from './components/VoiceToText.jsx';
 import Evaluation from './components/Evaluation';
+import './App.css';
 
 const InterviewPage = () => {
   // Keep Track of interview state
@@ -26,7 +27,6 @@ const InterviewPage = () => {
       <header className="App-header">
         {interviewInProgress ? (
           <>
-            <ChatBox setTranscript={setTranscript} userSpeech={userSpeech} messages={messages} setMessages={setMessages}/>
             <CameraComponent />
             <Button setInterviewInProgress={setInterviewInProgress}/>
             <VoiceToText transcript={transcript} setTranscript={setTranscript} setUserSpeech={setUserSpeech} userSpeech={userSpeech} />
