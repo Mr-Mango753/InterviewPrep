@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import mammoth from 'mammoth';
 
-const ResumeUpload = ({setUserSpeech}) => {
+const ResumeUpload = ({setUserSpeech, onUploadSuccess}) => {
   const [docxFile, setDocxFile] = useState(null);
   const [docxText, setDocxText] = useState('');
 
@@ -31,7 +31,10 @@ const ResumeUpload = ({setUserSpeech}) => {
     console.log(docxText);
     alert('Text data is logged to the console.');
     setUserSpeech(docxText);
+    onUploadSuccess(); // Call the callback after successful upload
   };
+
+  console.log("Resume upload page is loading");
 
   return (
     <div>
