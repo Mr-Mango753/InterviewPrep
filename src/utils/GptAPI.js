@@ -4,12 +4,12 @@ const apiKey = "" + process.env.REACT_APP_OPENAI_API_KEY;
 
 console.log(apiKey)
 
-const sendMessageToAI = async (message) => {
+const sendMessageToAI = async (message, modelType, maxTokens) => {
   try {
     const response = await axios.post('https://api.openai.com/v1/chat/completions', {
       "messages": message,
-      max_tokens: 100,
-      model: 'gpt-3.5-turbo'
+      max_tokens: maxTokens,
+      model: modelType
     }, {
       headers: {
         'Authorization': `Bearer ${apiKey}`,
