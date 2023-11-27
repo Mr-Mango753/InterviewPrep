@@ -56,7 +56,7 @@ const VoiceToText = ({ transcript, setTranscript, setUserSpeech }) => {
                 }
 
                 setIsListening(true);
-                recognitionRef.current.onstart = () => setIsListening(true);
+                recognitionRef.current.onstart = () => {};
 
                 // automatically on api maybe you can stop the break up when pause
                 // tricks to async waiting for state to update
@@ -89,6 +89,7 @@ const VoiceToText = ({ transcript, setTranscript, setUserSpeech }) => {
 
     const handleGenerateAudio = async () => {
         sendTranscriptToBackend(transcript);
+       // handleStop();
     };
 
     const sendTranscriptToBackend = async (text) => {

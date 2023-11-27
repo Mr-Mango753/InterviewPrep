@@ -23,8 +23,8 @@
     margin-top: -60px; /* Adjust as needed */
     margin-right: 10px; /* Adjust as needed */
     transition: background-color 0.3s;
-    position: absolute;
-    bottom: 0;
+    position: fixed;
+    bottom: 5px;
     right: 0;
     background-image: url('ComponentImages/CameraON.jpg');
     background-repeat: no-repeat;

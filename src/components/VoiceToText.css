@@ -1,13 +1,20 @@
 .voice-to-text-button {
-  position: relative;
-  margin-right: 70px;
+  position: fixed;
+  width: 50px;
+  height: 50px;
   color: white;
-  padding: 10px;
-  border-radius: 4px;
+  border: none;
   cursor: pointer;
-  transition: background-color 0.3s;
+  padding: 0;
+  border-radius: 5px;
+  margin-top: -60px; /* Adjust as needed */
+  margin-right: 70px; /* Adjust as needed */
+  bottom: 0;
+  right: 0;
   display: flex;
   align-items: center;
+  justify-content: center; /* Center the content horizontally */
+  transition: background-color 0.3s;
 }
 
 .voice-to-text-button.disabled {
