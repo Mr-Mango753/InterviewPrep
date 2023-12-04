@@ -25,6 +25,7 @@ const CategoryAndResumePage = () => {
 
   return (
     <div className="category-and-resume-page">
+      <img src={`${process.env.PUBLIC_URL}/AILOGO2.png`} alt="Logo" style={{ verticalAlign: 'middle', maxWidth: '50px', height: 'auto' }} />
       <h1>InterviewPrep AI</h1>
       <p>Select a category, upload your resume, and start the interview preparation!</p>
 

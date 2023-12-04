@@ -10,9 +10,16 @@
     border-radius: 5px;
     margin-bottom: 10px;
   }
+
+  .custom-webcam {
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slight shadow */
+    height: 400px; /* Adjust this value as needed */
+  }
+  
   
   .cam-mic-button {
-    background-color: #00ff00;
+    background-color: #87CEEB;
     color: #000;
     padding: 0; /* Remove padding */
     width: 50px; /* Set a fixed width */
@@ -33,14 +40,14 @@
   }
   
   .cam-mic-button:hover {
-    background-color: #00ff00;
+    background-color: #87CEEB;
   }
   
   .camera-off {
     background-image: url('ComponentImages/CameraOFF.jpg');
-    background-color: #ff0000;
+    background-color: #F2F2F2;
   }
   
   .camera-off:hover {
-    background-color: #ff0000;
+    background-color: #F2F2F2;
   }

@@ -24,14 +24,15 @@
 .upload-button {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #87CEEB;
   color: #fff;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease; 
 }
 
 .upload-button:hover {
-  background-color: #0056b3;
+  background-color: #70C7EB;
 }
 
 .submit-section {
@@ -40,13 +41,14 @@
 
 .submit-button {
   padding: 10px 20px;
-  background-color: #28a745;
+  background-color: #F04B4C;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease; 
 }
 
 .submit-button:hover {
-  background-color: #218838;
+  background-color: #F01B1C;
 }
