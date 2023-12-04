@@ -1,37 +1,46 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Updated import
+import { useNavigate } from 'react-router-dom';
 import ChatBox from './ChatBox';
 import ResumeUpload from './components/ResumeUpload.jsx';
+import './CategoryAndResumePage.css'; // Import your custom styles
 
 const CategoryAndResumePage = () => {
-  // Keep Track of interview state
-  //const [interviewInProgress, setInterviewInProgress] = useState(true);
-  // Entire Interview Conversation for evaluation
   const [messages, setMessages] = useState([]);
-  // GPT output?
   const [transcript, setTranscript] = useState('');
-  // User Input for GPT?
   const [userSpeech, setUserSpeech] = useState('');
   const [isResumeUploaded, setIsResumeUploaded] = useState(false);
-  const navigate = useNavigate(); // Updated to useNavigate
+  const navigate = useNavigate();
 
   const handleUploadSuccess = () => {
     setIsResumeUploaded(true);
   };
-  
+
   useEffect(() => {
-    // Check if resume is uploaded and a category is selected
-    if (isResumeUploaded /* and category is selected, if you manage category state here */) {
-      navigate('/interview'); // Updated to use navigate
+    if (isResumeUploaded) {
+      navigate('/interview');
     }
   }, [isResumeUploaded, navigate]);
 
   console.log("Category and Resume page is loading");
 
   return (
-    <div>
-      <ResumeUpload setUserSpeech={setUserSpeech} onUploadSuccess={handleUploadSuccess} />
-      <ChatBox setTranscript={setTranscript} userSpeech={userSpeech} messages={messages} setMessages={setMessages} isResumeUploaded={isResumeUploaded} />
+    <div className="category-and-resume-page">
+      <h1>InterviewPrep AI</h1>
+      <p>Select a category, upload your resume, and start the interview preparation!</p>
+
+      <div className="chat-section">
+        <ChatBox
+          setTranscript={setTranscript}
+          userSpeech={userSpeech}
+          messages={messages}
+          setMessages={setMessages}
+          isResumeUploaded={isResumeUploaded}
+        />
+      </div>
+      <br/>
+      <div className="upload-section">
+        <ResumeUpload setUserSpeech={setUserSpeech} onUploadSuccess={handleUploadSuccess} />
+      </div>
     </div>
   );
 };

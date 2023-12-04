@@ -1,7 +1,10 @@
+// ResumeUpload.jsx
+
 import React, { useState, useRef, useEffect } from 'react';
 import mammoth from 'mammoth';
+import './ResumeUpload.css'; // Import your custom styles
 
-const ResumeUpload = ({setUserSpeech, onUploadSuccess}) => {
+const ResumeUpload = ({ setUserSpeech, onUploadSuccess }) => {
   const [docxFile, setDocxFile] = useState(null);
   const [docxText, setDocxText] = useState('');
 
@@ -16,7 +19,7 @@ const ResumeUpload = ({setUserSpeech, onUploadSuccess}) => {
 
         mammoth.extractRawText({ arrayBuffer: arrayBuffer })
           .then((result) => {
-            setDocxText(result.value); 
+            setDocxText(result.value);
           })
           .catch((error) => {
             console.error('Error parsing .docx file:', error);
@@ -29,7 +32,7 @@ const ResumeUpload = ({setUserSpeech, onUploadSuccess}) => {
 
   const handleSubmit = () => {
     console.log(docxText);
-    alert('Text data is logged to the console.');
+    //alert('Text data is logged to the console.');
     setUserSpeech(docxText);
     onUploadSuccess(); // Call the callback after successful upload
   };
@@ -37,11 +40,23 @@ const ResumeUpload = ({setUserSpeech, onUploadSuccess}) => {
   console.log("Resume upload page is loading");
 
   return (
-    <div>
-      <input type="file" accept=".docx" onChange={handleFileChange} />
+    <div className="resume-upload-container">
+      <label htmlFor="resume-upload-input" className="upload-label">
+        <input
+          type="file"
+          id="resume-upload-input"
+          accept=".docx"
+          onChange={handleFileChange}
+          className="file-input"
+        />
+        <span className="upload-button">Upload Resume (.docx)</span>
+      </label>
+
       {docxFile && (
-        <div>
-          <button onClick={handleSubmit}>Submit Document</button>
+        <div className="submit-section">
+          <button onClick={handleSubmit} className="submit-button">
+            Submit Document
+          </button>
         </div>
       )}
     </div>

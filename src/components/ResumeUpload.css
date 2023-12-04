@@ -1,0 +1,52 @@
+/* ResumeUpload.css */
+
+.resume-upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-label {
+  position: relative;
+  overflow: hidden;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.file-input {
+  position: absolute;
+  font-size: 0;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+.upload-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.upload-button:hover {
+  background-color: #0056b3;
+}
+
+.submit-section {
+  margin-top: 20px;
+}
+
+.submit-button {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #218838;
+}

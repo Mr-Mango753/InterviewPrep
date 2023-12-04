@@ -12,6 +12,8 @@ const VoiceToText = ({ transcript, setTranscript, setUserSpeech }) => {
     useEffect(() => {
         if (transcript) {
           handleGenerateAudio();
+          // HANDLE STOP BUT SPEECH RECOGNITION HAS ALREADY STARTED BS
+          
         }
     }, [transcript]);
 

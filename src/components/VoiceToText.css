@@ -42,19 +42,22 @@
 }
 
 .transcript-display {
+  background-color: #dddddd; /* Light gray background */
   border: 1px solid #ddd;
-  padding: 10px;
-  margin: 10px;
-  background-color: #f9f9f9;
+  border-radius: 5px; /* Smaller border-radius for a cleaner look */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 5px; /* Smaller padding */
+  margin-top: 10px;
 }
 
 .transcript-display h2 {
-  margin-bottom: 10px;
   color: #333;
+  font-size: 24px; /* Smaller font size */
+  margin-bottom: 6px; /* Smaller margin-bottom */
 }
 
 .transcript-display p {
-  margin: 0;
-  font-size: 16px;
   color: #555;
+  font-size: 24px; /* Even smaller font size */
+  line-height: 1.4;
 }
