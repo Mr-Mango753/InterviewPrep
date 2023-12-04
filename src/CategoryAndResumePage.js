@@ -3,15 +3,9 @@ import { useNavigate } from 'react-router-dom'; // Updated import
 import ChatBox from './ChatBox';
 import ResumeUpload from './components/ResumeUpload.jsx';
 
-const CategoryAndResumePage = () => {
+const CategoryAndResumePage = ({ setTranscript, userSpeech, messages, setMessages, setUserSpeech }) => {
   // Keep Track of interview state
-  //const [interviewInProgress, setInterviewInProgress] = useState(true);
-  // Entire Interview Conversation for evaluation
-  const [messages, setMessages] = useState([]);
-  // GPT output?
-  const [transcript, setTranscript] = useState('');
-  // User Input for GPT?
-  const [userSpeech, setUserSpeech] = useState('');
+  
   const [isResumeUploaded, setIsResumeUploaded] = useState(false);
   const navigate = useNavigate(); // Updated to useNavigate
 
