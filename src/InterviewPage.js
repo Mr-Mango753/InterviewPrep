@@ -6,15 +6,7 @@ import VoiceToText from './components/VoiceToText.jsx';
 import Evaluation from './components/Evaluation';
 import './App.css';
 
-const InterviewPage = () => {
-  // Keep Track of interview state
-  const [interviewInProgress, setInterviewInProgress] = useState(true);
-  // Entire Interview Conversation for evaluation
-  const [messages, setMessages] = useState([]);
-  // GPT output?
-  const [transcript, setTranscript] = useState('');
-  // User Input for GPT?
-  const [userSpeech, setUserSpeech] = useState('');
+const InterviewPage = ({ initialContext, setTranscript, userSpeech, messages, setMessages, setUserSpeech, setInterviewInProgress, interviewInProgress, transcript }) => {
 
   useEffect(() => {
     console.log("full Conversation", interviewInProgress, messages);
@@ -28,6 +20,7 @@ const InterviewPage = () => {
         {interviewInProgress ? (
           <>
             <CameraComponent />
+            <ChatBox initialContext={initialContext} setTranscript={setTranscript} userSpeech={userSpeech} messages={messages} setMessages={setMessages}/>
             <Button setInterviewInProgress={setInterviewInProgress}/>
             <VoiceToText transcript={transcript} setTranscript={setTranscript} setUserSpeech={setUserSpeech} userSpeech={userSpeech} />
           </>

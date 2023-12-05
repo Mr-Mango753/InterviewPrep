@@ -1,14 +1,17 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import mammoth from 'mammoth';
 
-const ResumeUpload = ({setUserSpeech, onUploadSuccess}) => {
+const ResumeUpload = ({setDocxText, docxText}) => {
   const [docxFile, setDocxFile] = useState(null);
-  const [docxText, setDocxText] = useState('');
-
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file && file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
       setDocxFile(file);
+    }
+  };
+
+  const handleSubmit = () => {
+    if (docxFile) {
       const reader = new FileReader();
 
       reader.onload = (e) => {
@@ -16,22 +19,17 @@ const ResumeUpload = ({setUserSpeech, onUploadSuccess}) => {
 
         mammoth.extractRawText({ arrayBuffer: arrayBuffer })
           .then((result) => {
-            setDocxText(result.value); 
+            setDocxText(result.value);
+            console.log(result.value);
+            alert('Text data is logged to the console.');
           })
           .catch((error) => {
             console.error('Error parsing .docx file:', error);
           });
       };
 
-      reader.readAsArrayBuffer(file);
+      reader.readAsArrayBuffer(docxFile);
     }
-  };
-
-  const handleSubmit = () => {
-    console.log(docxText);
-    alert('Text data is logged to the console.');
-    setUserSpeech(docxText);
-    onUploadSuccess(); // Call the callback after successful upload
   };
 
   console.log("Resume upload page is loading");

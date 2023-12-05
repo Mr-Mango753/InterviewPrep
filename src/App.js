@@ -7,6 +7,10 @@ import './App.css';
 // Import other components or pages if necessary
 
 function App() {
+  // initial context
+  const [initialContext, setInitialContext] = useState('');
+  // Resume text
+  const [docxText, setDocxText] = useState('');
   // Keep Track of interview state
   const [interviewInProgress, setInterviewInProgress] = useState(true)
   // Entire Interview Conversation for evaluation
@@ -27,10 +31,10 @@ function App() {
       <div className="App">
         <Routes>
           {/* Define the route for the Category and Resume page */}
-          <Route exact path="/" element={<CategoryAndResumePage setTranscript={setTranscript} userSpeech={userSpeech} messages={messages} setMessages={setMessages} setUserSpeech={setUserSpeech}/>} />
+          <Route exact path="/" element={<CategoryAndResumePage setDocxText={setDocxText} docxText={docxText} initialContext={initialContext} setInitialContext={setInitialContext} />} />
 
           {/* Define the route for the Interview page */}
-          <Route path="/interview" element={<InterviewPage setInterviewInProgress={setInterviewInProgress} transcript={transcript} setTranscript={setTranscript} setUserSpeech={setUserSpeech} userSpeech={userSpeech}/>} />
+          <Route path="/interview" element={<InterviewPage initialContext={initialContext} setInterviewInProgress={setInterviewInProgress} transcript={transcript} setTranscript={setTranscript} setUserSpeech={setUserSpeech} userSpeech={userSpeech} messages={messages} setMessages={setMessages} interviewInProgress={interviewInProgress} />} />
 
           {/* You can add more routes for other components or pages here */}
         </Routes>
