@@ -73,7 +73,7 @@ const exampleQuestionsAndAnswers = {
         let resumeText = '';
         if (docxText)
         {
-            resumeText = " This is the candidate's resume " + docxText;
+            resumeText = " This is the candidate's resume: " + docxText + " Make sure to at least ask them some questions about their resume.";
         }
         else
         {
