@@ -12,7 +12,8 @@ const InitialChatBox = ({ docxText, initialContext, setInitialContext }) => {
         "Perseverance": "Are they able to push through difficult problems or blockers?",
         "Conflict Resolution and Empathy": "How well are they able to handle and work through challenging relationships? How well are they able to see things from the perspective of others and understand their motivations?",
         "Growth": "How well do they understand their strengths, weaknesses, and growth areas? Are they making a continued effort to grow?",
-        "Communication": "Are they able to clearly communicate their stories during the interview? Generally covered during the interview as to how clearly they are explaining the stories. There is also some overlap with Empathy and how they communicate with others."
+        "Communication": "Are they able to clearly communicate their stories during the interview? Generally covered during the interview as to how clearly they are explaining the stories. There is also some overlap with Empathy and how they communicate with others.",
+        "Any": ""
       };
 
     // Example questions and answers for each category
@@ -64,21 +65,28 @@ const exampleQuestionsAndAnswers = {
     "When you are interacting with the candidate, please act empathetic but firm in your questions. " +
     "If the candidate's answer is inappropriate, please feel free to either remind them they are in an interview or thank them for their time. " +
     "If the candidate's answer is great, please feel free to strike a happier tone with them. " +
-    "Last reminder: You are here today to assess the user on their behavior through a behavioral test. ONLY act as the interviewer and AWAIT THEIR MESSAGE." +
-    "You will be assessing the candidate on their general communication skills. Are they able to clearly communicate their stories during the interview? Generally covered during the interview as to how clearly they are explaining the stories. There is also some overlap with Empathy and how they communicate with others.";
+    "Last reminder: You are here today to assess the user on their behavior through a behavioral test. ONLY act as the interviewer and AWAIT THEIR MESSAGE." 
+    //"You will be assessing the candidate on their general communication skills. Are they able to clearly communicate their stories during the interview? Generally covered during the interview as to how clearly they are explaining the stories. There is also some overlap with Empathy and how they communicate with others.";
 
     // Build the initial context based on the selected category
     const getInitialContext = () => {
-        let additionalContext = "The main focus area you will assess is their " + selectedCategory + ". " + categories[selectedCategory] + " Example Questions to ask are: " + exampleQuestionsAndAnswers[selectedCategory]["Example Questions"] || '';
+        let additionalContext = '';
+        console.log("selected category is: " + selectedCategory);
+        if (categories[selectedCategory]){
+            additionalContext = "The main focus area you will assess is their " + selectedCategory + ". " + categories[selectedCategory] + " Example Questions to ask are: " + exampleQuestionsAndAnswers[selectedCategory]["Example Questions"] || '';
+        }
+        console.log("additional context is: " + additionalContext)
         let resumeText = '';
         if (docxText)
         {
-            resumeText = " This is the candidate's resume: " + docxText + " Make sure to at least ask them some questions about their resume.";
+            resumeText = "\nThis is the candidate's resume:\n" + docxText + "\nMake sure to at least ask them some questions about their resume.";
         }
         else
         {
-            resumeText = " The candidate has not uploaded a resume, so do not ask them to share it. ";
+
+            resumeText =  "\nThe candidate has not uploaded a resume, so do not ask them to share it. ";
         }
+        console.log("final result is: " + baseContext + additionalContext + resumeText)
         return baseContext + additionalContext + resumeText;
     };
 
