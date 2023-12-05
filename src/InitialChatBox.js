@@ -6,14 +6,14 @@ const InitialChatBox = ({ docxText, initialContext, setInitialContext }) => {
     //const navigate = useNavigate();
 
     const categories = {
+        "Any": "",
         "Motivation": "We want to know what drives them? Ideal candidates are self-motivated, passionate about technologies and products that have a real impact.",
         "Ability to be Proactive": "Are they able to take initiative? Given a difficult problem, are they able to figure out how to get it done and execute?",
         "Able to work in an unstructured environment": "How well are they able to take ownership in ambiguous situations? Or do they rely on others to be told what to do?",
         "Perseverance": "Are they able to push through difficult problems or blockers?",
         "Conflict Resolution and Empathy": "How well are they able to handle and work through challenging relationships? How well are they able to see things from the perspective of others and understand their motivations?",
         "Growth": "How well do they understand their strengths, weaknesses, and growth areas? Are they making a continued effort to grow?",
-        "Communication": "Are they able to clearly communicate their stories during the interview? Generally covered during the interview as to how clearly they are explaining the stories. There is also some overlap with Empathy and how they communicate with others.",
-        "Any": ""
+        "Communication": "Are they able to clearly communicate their stories during the interview? Generally covered during the interview as to how clearly they are explaining the stories. There is also some overlap with Empathy and how they communicate with others."
       };
 
     // Example questions and answers for each category
@@ -83,7 +83,6 @@ const exampleQuestionsAndAnswers = {
         }
         else
         {
-
             resumeText =  "\nThe candidate has not uploaded a resume, so do not ask them to share it. ";
         }
         console.log("final result is: " + baseContext + additionalContext + resumeText)
