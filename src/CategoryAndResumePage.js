@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Updated import
 import ResumeUpload from './components/ResumeUpload.jsx';
 import InitialChatBox from './InitialChatBox.js';
+import './CategoryAndResumePage.css'; 
 
 const CategoryAndResumePage = ({ setDocxText, docxText, initialContext, setInitialContext }) => {
   // Keep Track of interview state
@@ -24,9 +25,18 @@ const CategoryAndResumePage = ({ setDocxText, docxText, initialContext, setIniti
   console.log("Category and Resume page is loading");
 
   return (
-    <div>
-      <ResumeUpload setDocxText={setDocxText} docxText={docxText}/>
+    <div classname="category-and-resume-page">
+      <img src={`${process.env.PUBLIC_URL}/AILOGO2.png`} alt="Logo" style={{ verticalAlign: 'middle', maxWidth: '50px', height: 'auto' }} />
+      <h1>InterviewPrep AI</h1>
+      <p>Select a category, upload your resume, and start the interview preparation!</p>
+
+      <div className="chat-section">
       <InitialChatBox docxText={docxText} initialContext={initialContext} setInitialContext={setInitialContext}/>
+      </div>
+      <br/>
+      <div className="upload-section">
+        <ResumeUpload setDocxText={setDocxText} docxText={docxText}/>
+      </div>
     </div>
   );
 };

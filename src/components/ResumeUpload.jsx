@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import mammoth from 'mammoth';
+import './ResumeUpload.css';
 
 const ResumeUpload = ({setDocxText, docxText}) => {
   const [docxFile, setDocxFile] = useState(null);
@@ -35,11 +36,20 @@ const ResumeUpload = ({setDocxText, docxText}) => {
   console.log("Resume upload page is loading");
 
   return (
-    <div>
-      <input type="file" accept=".docx" onChange={handleFileChange} />
+    <div className="resume-upload-container">
+      <label htmlFor="resume-upload-input" className="upload-label">
+        <input
+          type="file"
+          id="resume-upload-input"
+          accept=".docx"
+          onChange={handleFileChange}
+          className="file-input"
+        />
+        <span className="upload-button">Upload Resume (.docx)</span>
+      </label>
       {docxFile && (
-        <div>
-          <button onClick={handleSubmit}>Submit Document</button>
+        <div className="submit-section">
+          <button className="submit-button" onClick={handleSubmit}>Submit Document</button>
         </div>
       )}
     </div>

@@ -19,11 +19,24 @@ const InterviewPage = ({ initialContext, setTranscript, userSpeech, messages, se
       <header className="App-header">
         {interviewInProgress ? (
           <>
-            <CameraComponent />
             <ChatBox initialContext={initialContext} setTranscript={setTranscript} userSpeech={userSpeech} messages={messages} setMessages={setMessages}/>
-            <Button setInterviewInProgress={setInterviewInProgress}/>
-            <VoiceToText transcript={transcript} setTranscript={setTranscript} setUserSpeech={setUserSpeech} userSpeech={userSpeech} />
-          </>
+            
+            <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'space-around' }}>
+              <CameraComponent />
+              <div>
+              <iframe 
+              title="External Content" 
+              src="http://the-singularity-show.com/pages/CS338/interview.html" 
+              width="500" 
+              height="300" 
+              />  
+              <VoiceToText transcript={transcript} setTranscript={setTranscript} setUserSpeech={setUserSpeech} userSpeech={userSpeech} />
+              </div>
+            </div>
+            <div>
+              <Button setInterviewInProgress={setInterviewInProgress}/>
+            </div>
+            </>
         ) : (
           <Evaluation messages={messages}/>
         )}

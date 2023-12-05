@@ -1,13 +1,20 @@
 .voice-to-text-button {
-  position: relative;
-  margin-right: 70px;
+  position: fixed;
+  width: 50px;
+  height: 50px;
   color: white;
-  padding: 10px;
-  border-radius: 4px;
+  border: none;
   cursor: pointer;
-  transition: background-color 0.3s;
+  padding: 0;
+  border-radius: 5px;
+  margin-top: -60px; /* Adjust as needed */
+  margin-right: 70px; /* Adjust as needed */
+  bottom: 0;
+  right: 0;
   display: flex;
   align-items: center;
+  justify-content: center; /* Center the content horizontally */
+  transition: background-color 0.3s;
 }
 
 .voice-to-text-button.disabled {
@@ -16,11 +23,11 @@
 }
 
 .voice-to-text-button.green {
-  background-color: #00ff00;
+  background-color: #87CEEB;
 }
 
 .voice-to-text-button.red {
-  background-color: red;
+  background-color: #F2F2F2;
 }
 
 .mic-icon {
@@ -35,19 +42,21 @@
 }
 
 .transcript-display {
+  width: 500px; /* Set fixed width */
+  margin-top: 0; /* Resetting top margin */
+  background-color: #f0f0f0; /* Even lighter gray background */
   border: 1px solid #ddd;
-  padding: 10px;
-  margin: 10px;
-  background-color: #f9f9f9;
+  border-radius: 5px; /* Keeping the smaller border-radius */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Lighter shadow for subtler effect */
 }
 
 .transcript-display h2 {
-  margin-bottom: 10px;
   color: #333;
+  font-size: 16px; /* Further reduced font size */
 }
 
 .transcript-display p {
-  margin: 0;
-  font-size: 16px;
   color: #555;
+  font-size: 16px; /* Further reduced font size for paragraph */
+  line-height: 1.4;
 }
