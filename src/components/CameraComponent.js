@@ -23,6 +23,7 @@ const CameraComponent = () => {
   return (
     <div>
       <Webcam
+        className='custom-webcam'
         key={key}
         audio={false} // Disabling audio
         ref={webcamRef}
