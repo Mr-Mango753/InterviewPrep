@@ -3,12 +3,12 @@ import { sendMessageToAI } from "../utils/GptAPI";
 import styled from 'styled-components';
 
 const StyledResponse = styled.div`
-margin: 20px;
-padding: 15px;
 border: 1px solid #ddd;
 border-radius: 8px;
 font-size: 16px;
 line-height: 1.5;
+text-align: left; 
+color: #333;
 `;
 
 const SectionTitle = styled.h2`
@@ -17,7 +17,8 @@ const SectionTitle = styled.h2`
 `;
 
 const SectionContent = styled.div`
-  margin-top: 10px;
+  color: #333;
+
 `;
 
 
@@ -58,8 +59,9 @@ const Evaluation = ({ messages }) => {
         console.log(response)
       }
     };
-
-    fetchEvaluation();
+    if (gptMessages === "") {
+      fetchEvaluation();
+    }
   }, []);
 
   const formatResponse = (response) => {
@@ -85,7 +87,8 @@ const Evaluation = ({ messages }) => {
     <StyledResponse>
       {gptMessages && formatResponse(gptMessages).map((section, index) => (
         <div key={index}>
-          <SectionTitle>Section {index + 1}</SectionTitle>
+          {/* <SectionTitle>Section {index + 1}</SectionTitle> */}
+          <h1>   </h1>
           {section}
         </div>
       ))}
