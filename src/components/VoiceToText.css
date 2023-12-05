@@ -42,6 +42,7 @@
 }
 
 .transcript-display {
+  width: 500px; /* Set fixed width */
   margin-top: 0; /* Resetting top margin */
   background-color: #f0f0f0; /* Even lighter gray background */
   border: 1px solid #ddd;
@@ -59,4 +60,5 @@
   font-size: 16px; /* Further reduced font size for paragraph */
   line-height: 1.4;
 }
+
 
