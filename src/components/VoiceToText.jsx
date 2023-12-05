@@ -182,7 +182,6 @@ const VoiceToText = ({ transcript, setTranscript, setUserSpeech }) => {
             )}
 
             <div className="transcript-display">
-                <h2>Transcript:</h2>
                 <p>{transcript}</p>
             </div>
         </div>

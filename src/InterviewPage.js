@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import CameraComponent from './components/CameraComponent';
-import ChatBox from './ChatBox';
 import Button from './components/Button.jsx';
 import VoiceToText from './components/VoiceToText.jsx';
 import Evaluation from './components/Evaluation';
 import './App.css';
+import ChatBox from './ChatBox';
+
 
 const InterviewPage = () => {
   // Keep Track of interview state
@@ -27,12 +28,35 @@ const InterviewPage = () => {
       <header className="App-header">
         {interviewInProgress ? (
           <>
+          <ChatBox
+          setTranscript={setTranscript}
+          userSpeech={userSpeech}
+          messages={messages}
+          setMessages={setMessages}
+          isResumeUploaded={true}
+        />
+          <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'space-around' }}>
             <CameraComponent />
-            <Button setInterviewInProgress={setInterviewInProgress}/>
-            <VoiceToText transcript={transcript} setTranscript={setTranscript} setUserSpeech={setUserSpeech} userSpeech={userSpeech} />
+            <div>
+            <iframe 
+              title="External Content" 
+              src="http://the-singularity-show.com/pages/CS338/interview.html" 
+              width="500" 
+              height="300" 
+            />
+            <VoiceToText 
+              transcript={transcript} 
+              setTranscript={setTranscript} 
+              setUserSpeech={setUserSpeech} 
+              userSpeech={userSpeech} 
+            />
+            </div>
+          </div>
+            <Button setInterviewInProgress={setInterviewInProgress} />
+
           </>
         ) : (
-          <Evaluation messages={messages}/>
+          <Evaluation messages={messages} />
         )}
       </header>
     </div>
